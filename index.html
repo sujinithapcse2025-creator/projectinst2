@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drishti Bank • Accessible Voice-First Banking | INNOVEX (DEX26121)</title>
+  <style>
+    :root {
+      --font-scale: 1.12;
+      --bg-primary: #0B132B;
+      --bg-surface: #101B39;
+      --bg-card: #15244C;
+      --bg-card-hover: #1C3064;
+      --border-color: #243B6B;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-accent: #E5B842;
+      --accent-color: #10B981;
+      --accent-gold: #E5B842;
+      --danger-color: #EF4444;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --warning-color: #F59E0B;
+      --focus-outline: 3px solid #E5B842;
+      --card-radius: 14px;
+      --btn-radius: 10px;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* High Contrast Themes */
+    body.theme-navy-gold {
+      --bg-primary: #0B132B;
+      --bg-surface: #101B39;
+      --bg-card: #15244C;
+      --bg-card-hover: #1C3064;
+      --border-color: #243B6B;
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-accent: #E5B842;
+      --accent-color: #10B981;
+      --danger-color: #EF4444;
+    }
+
+    body.theme-gold-black {
+      --bg-primary: #07090E;
+      --bg-surface: #0E121B;
+      --bg-card: #131A26;
+      --bg-card-hover: #1D273A;
+      --border-color: #E5B842;
+      --text-primary: #FFFFFF;
+      --text-secondary: #A0AEC0;
+      --text-accent: #E5B842;
+      --accent-color: #10B981;
+      --danger-color: #FF4D4D;
+    }
+
+    body.theme-blue-white {
+      --bg-primary: #06152B;
+      --bg-surface: #0B2244;
+      --bg-card: #10305F;
+      --bg-card-hover: #18427F;
+      --border-color: #38BDF8;
+      --text-primary: #F0F9FF;
+      --text-secondary: #BAE6FD;
+      --text-accent: #38BDF8;
+      --accent-color: #34D399;
+      --danger-color: #F87171;
+    }
+
+    body.theme-light-senior {
+      --bg-primary: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F1F5F9;
+      --border-color: #CBD5E1;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-accent: #B45309;
+      --accent-color: #059669;
+      --danger-color: #DC2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: rgba(229, 184, 66, 0.25);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      font-size: calc(17px * var(--font-scale));
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    /* Accessibility Focus Indicators */
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, [tabindex="0"]:focus-visible {
+      outline: var(--focus-outline) !important;
+      outline-offset: 3px !important;
+    }
+
+    /* Screen Reader Skip Link */
+    .skip-to-content {
+      position: absolute;
+      top: -120px;
+      left: 14px;
+      background: var(--text-accent);
+      color: #0B132B;
+      padding: 12px 22px;
+      font-weight: 800;
+      z-index: 9999;
+      text-decoration: none;
+      border-radius: var(--btn-radius);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      transition: top 0.2s;
+    }
+    .skip-to-content:focus {
+      top: 14px;
+    }
+
+    /* Top Hackathon & Institutional Bar */
+    .hackathon-bar {
+      background: rgba(11, 19, 43, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 9px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: calc(12.5px * var(--font-scale));
+      color: var(--text-secondary);
+    }
+    .hackathon-bar .inst-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .hackathon-bar .inst-tag strong {
+      color: var(--text-primary);
+      letter-spacing: 0.3px;
+    }
+    .badge-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      color: var(--text-primary);
+      font-size: 0.88em;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge-pill strong {
+      color: var(--text-accent);
+    }
+
+    /* Header */
+    header {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+    }
+    .header-content {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(229, 184, 66, 0.2) 0%, rgba(229, 184, 66, 0.05) 100%);
+      border: 1.5px solid var(--text-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-accent);
+      flex-shrink: 0;
+    }
+    .brand-text h1 {
+      font-size: calc(23px * var(--font-scale));
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .brand-text p {
+      font-size: calc(13px * var(--font-scale));
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Accessibility Toolbar */
+    .accessibility-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .control-btn {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: var(--btn-radius);
+      font-weight: 600;
+      font-size: calc(13px * var(--font-scale));
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .control-btn:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--text-accent);
+    }
+    .control-btn.active {
+      background-color: rgba(229, 184, 66, 0.18);
+      border-color: var(--text-accent);
+      color: var(--text-accent);
+    }
+    .control-btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Live Voice Status Bar */
+    .voice-status-banner {
+      background-color: rgba(16, 27, 57, 0.7);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .voice-message-display {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: calc(16px * var(--font-scale));
+      color: var(--text-primary);
+      flex: 1;
+      min-width: 280px;
+    }
+    .voice-pulse-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: #64748B;
+      flex-shrink: 0;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .voice-pulse-dot.listening {
+      background-color: #EF4444;
+      animation: pulseAlert 0.9s infinite alternate;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+    }
+    .voice-pulse-dot.speaking {
+      background-color: #10B981;
+      animation: pulseAlert 0.7s infinite alternate;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+    }
+    @keyframes pulseAlert {
+      0% { transform: scale(0.85); opacity: 0.7; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+    .voice-action-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Giant Accessible Voice Hero Button */
+    .mic-hero-wrapper {
+      max-width: 1240px;
+      margin: 18px auto 0;
+      padding: 0 20px;
+      width: 100%;
+    }
+    .giant-mic-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #E5B842 0%, #D4A328 100%);
+      color: #0B132B;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--card-radius);
+      padding: 18px 24px;
+      font-size: calc(20px * var(--font-scale));
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 8px 24px rgba(229, 184, 66, 0.25);
+      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+      min-height: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .giant-mic-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(229, 184, 66, 0.4);
+    }
+    .giant-mic-btn:active {
+      transform: translateY(1px);
+    }
+    .giant-mic-btn.active-listening {
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      color: #FFFFFF;
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
+      animation: micBreathing 1.2s infinite alternate;
+    }
+    @keyframes micBreathing {
+      0% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); }
+      100% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.95); }
+    }
+    .mic-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(11, 19, 43, 0.15);
+      flex-shrink: 0;
+    }
+    .giant-mic-btn.active-listening .mic-icon-wrapper {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Voice Simulator Bar */
+    .voice-simulator-bar {
+      max-width: 1240px;
+      margin: 14px auto 0;
+      padding: 0 20px;
+      width: 100%;
+    }
+    .sim-container {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      padding: 12px 16px;
+    }
+    .sim-title {
+      font-size: calc(12.5px * var(--font-scale));
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    .sim-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sim-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 7px 13px;
+      border-radius: 9999px;
+      font-size: calc(12.5px * var(--font-scale));
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .sim-chip:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--text-accent);
+      transform: translateY(-1px);
+    }
+    .sim-chip svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1240px;
+      margin: 20px auto 40px;
+      padding: 0 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Account Overview Card */
+    .account-hero-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .account-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 14px;
+    }
+    .account-holder-name {
+      font-size: calc(21px * var(--font-scale));
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .account-category-pill {
+      background: rgba(229, 184, 66, 0.15);
+      border: 1px solid var(--text-accent);
+      color: var(--text-accent);
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: calc(12px * var(--font-scale));
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .account-balance-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .balance-label {
+      font-size: calc(13px * var(--font-scale));
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .balance-amount {
+      font-size: calc(42px * var(--font-scale));
+      font-weight: 900;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+    .balance-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Grid of 4 Core Banking Actions */
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .action-tile {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      padding: 24px;
+      min-height: 175px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.15s, border-color 0.15s, background-color 0.15s;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+    .action-tile:hover {
+      background-color: var(--bg-card);
+      border-color: var(--text-accent);
+      transform: translateY(-3px);
+    }
+    .action-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+    .action-icon-box.gold {
+      background: rgba(229, 184, 66, 0.15);
+      color: var(--text-accent);
+      border: 1px solid rgba(229, 184, 66, 0.35);
+    }
+    .action-icon-box.emerald {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .action-icon-box.blue {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38BDF8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    .action-icon-box.danger {
+      background: var(--danger-bg);
+      color: var(--danger-color);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .action-title {
+      font-size: calc(20px * var(--font-scale));
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .action-desc {
+      font-size: calc(13px * var(--font-scale));
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .action-tile.tile-danger {
+      border-color: rgba(239, 68, 68, 0.5);
+    }
+    .action-tile.tile-danger:hover {
+      border-color: var(--danger-color);
+      background-color: rgba(239, 68, 68, 0.08);
+    }
+    .action-tile.tile-danger .action-title {
+      color: var(--danger-color);
+    }
+
+    /* Modals & Workflow Panels */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(5, 11, 24, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 620px;
+      padding: 26px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+    .modal-header h2 {
+      font-size: calc(22px * var(--font-scale));
+      color: var(--text-primary);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .close-modal-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .close-modal-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+      border-color: var(--text-accent);
+    }
+
+    /* Beneficiary Selection List */
+    .beneficiary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .beneficiary-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+    .beneficiary-item:hover, .beneficiary-item:focus {
+      border-color: var(--text-accent);
+      background: var(--bg-card-hover);
+    }
+    .beneficiary-item.flagged-scam {
+      border-color: rgba(239, 68, 68, 0.6);
+      background: rgba(239, 68, 68, 0.08);
+    }
+    .beneficiary-item.flagged-scam:hover {
+      border-color: var(--danger-color);
+    }
+
+    /* Preset Amount Buttons */
+    .amount-presets {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .amount-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 12px 6px;
+      border-radius: var(--btn-radius);
+      font-size: calc(16px * var(--font-scale));
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .amount-chip:hover {
+      background: var(--text-accent);
+      color: #0B132B;
+      border-color: var(--text-accent);
+    }
+
+    /* Giant Input Field */
+    .giant-input {
+      width: 100%;
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: calc(30px * var(--font-scale));
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: var(--btn-radius);
+      margin-bottom: 14px;
+      text-align: center;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+    .giant-input:focus {
+      border-color: var(--text-accent);
+    }
+
+    /* AI Fraud Shield Alert Banner */
+    .fraud-warning-box {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1.5px solid var(--danger-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 14px 0;
+      animation: alertGlow 1.6s infinite alternate;
+    }
+    @keyframes alertGlow {
+      0% { border-color: rgba(239, 68, 68, 0.5); }
+      100% { border-color: rgba(239, 68, 68, 1); }
+    }
+    .fraud-warning-title {
+      color: #F87171;
+      font-size: calc(18px * var(--font-scale));
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .fraud-warning-text {
+      color: var(--text-primary);
+      font-size: calc(13.5px * var(--font-scale));
+      line-height: 1.45;
+    }
+
+    /* Confirmation Summary Card */
+    .confirmation-summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--card-radius);
+      padding: 20px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    .confirm-title {
+      font-size: calc(13px * var(--font-scale));
+      color: var(--text-secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .confirm-amount {
+      font-size: calc(36px * var(--font-scale));
+      font-weight: 900;
+      color: var(--text-accent);
+      margin-bottom: 6px;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+    .confirm-recipient {
+      font-size: calc(18px * var(--font-scale));
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* Accessible Keypad */
+    .pin-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .pin-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: calc(24px * var(--font-scale));
+      font-weight: 800;
+      padding: 14px;
+      border-radius: var(--btn-radius);
+      cursor: pointer;
+      min-height: 58px;
+      transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .pin-btn:hover {
+      background: var(--text-accent);
+      color: #0B132B;
+      border-color: var(--text-accent);
+    }
+    .pin-btn.btn-clear {
+      color: var(--danger-color);
+      font-size: calc(15px * var(--font-scale));
+    }
+    .pin-btn.btn-submit {
+      color: var(--accent-color);
+      font-size: calc(15px * var(--font-scale));
+    }
+
+    /* Transaction History */
+    .transactions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tx-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.15s;
+    }
+    .tx-item:hover, .tx-item:focus {
+      border-color: var(--text-accent);
+    }
+    .tx-item.credit .tx-amount {
+      color: #10B981;
+    }
+    .tx-item.debit .tx-amount {
+      color: #F87171;
+    }
+    .tx-title {
+      font-size: calc(16px * var(--font-scale));
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .tx-date {
+      font-size: calc(12px * var(--font-scale));
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .tx-amount {
+      font-size: calc(20px * var(--font-scale));
+      font-weight: 800;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+
+    /* Modal Buttons */
+    .modal-btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .modal-primary-btn {
+      flex: 2;
+      background: var(--text-accent);
+      color: #0B132B;
+      border: none;
+      border-radius: var(--btn-radius);
+      padding: 14px;
+      font-size: calc(16px * var(--font-scale));
+      font-weight: 800;
+      cursor: pointer;
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.15s;
+    }
+    .modal-primary-btn:hover {
+      opacity: 0.92;
+    }
+    .modal-cancel-btn {
+      flex: 1;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--btn-radius);
+      padding: 14px;
+      font-size: calc(15px * var(--font-scale));
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 52px;
+      transition: background-color 0.15s;
+    }
+    .modal-cancel-btn:hover {
+      background: var(--bg-card-hover);
+    }
+    .modal-danger-btn {
+      flex: 2;
+      background: var(--danger-color);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--btn-radius);
+      padding: 14px;
+      font-size: calc(16px * var(--font-scale));
+      font-weight: 800;
+      cursor: pointer;
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.15s;
+    }
+    .modal-danger-btn:hover {
+      opacity: 0.92;
+    }
+
+    /* Pitch Grid */
+    .pitch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 14px 0;
+    }
+    @media (max-width: 640px) {
+      .pitch-grid { grid-template-columns: 1fr; }
+    }
+    .pitch-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      border-radius: 12px;
+    }
+    .pitch-box h4 {
+      color: var(--text-accent);
+      margin-bottom: 6px;
+      font-size: calc(15px * var(--font-scale));
+      font-weight: 700;
+    }
+    .pitch-box p, .pitch-box li {
+      font-size: calc(12.5px * var(--font-scale));
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .pitch-box ul {
+      padding-left: 18px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 20px;
+      text-align: center;
+      font-size: calc(12.5px * var(--font-scale));
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body class="theme-navy-gold">
+
+  <!-- Screen reader skip link -->
+  <a href="#main-content" class="skip-to-content" id="skipLink">Skip to Main Content</a>
+
+  <!-- Top Hackathon Institutional Bar -->
+  <div class="hackathon-bar" role="region" aria-label="Event Information">
+    <div class="inst-tag">
+      <!-- Institutional Pillar Crest SVG -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--text-accent);"><path d="m2 7 10-5 10 5v2H2Z"/><path d="M4 11v8"/><path d="M8 11v8"/><path d="M12 11v8"/><path d="M16 11v8"/><path d="M20 11v8"/><path d="M2 21h20"/></svg>
+      <span><strong>SATHYABAMA INSTITUTE OF SCIENCE & TECHNOLOGY</strong> | DEXATHON 2026</span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <span class="badge-pill">Team: <strong>INNOVEX</strong></span>
+      <span class="badge-pill">Team ID: <strong>DEX26121</strong></span>
+      <span class="badge-pill">Theme: <strong>FINTECH & EDTECH</strong></span>
+      <button class="control-btn" style="padding: 4px 10px; min-height: 30px; font-size: 11.5px;" onclick="openPitchModal()" aria-label="Open presentation slides and references">
+        <!-- Document / Presentation SVG -->
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <span>Pitch Deck Info</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header role="banner">
+    <div class="header-content">
+      <div class="brand-title">
+        <div class="brand-icon-box" aria-hidden="true">
+          <!-- Elegant Shield + Bank Icon SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1 id="appTitle">Drishti Bank • பார்வை வங்கி</h1>
+          <p id="appSubtitle">Accessible Voice-First Banking for the Visually Impaired and Elderly</p>
+        </div>
+      </div>
+
+      <!-- Accessibility Toolbar -->
+      <div class="accessibility-toolbar" role="toolbar" aria-label="Accessibility options">
+        <!-- Language Switcher -->
+        <button id="langToggleBtn" class="control-btn" onclick="toggleLanguage()" aria-label="Switch Language. Currently English">
+          <!-- Globe SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>தமிழ் / English</span>
+        </button>
+
+        <!-- Theme Switcher -->
+        <button class="control-btn" onclick="cycleTheme()" aria-label="Toggle high contrast color theme">
+          <!-- Palette SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          <span id="themeLabel">Contrast: Navy/Gold</span>
+        </button>
+
+        <!-- Font Scaler -->
+        <button class="control-btn" onclick="cycleFontSize()" aria-label="Adjust font size">
+          <!-- Type / Font Size SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          <span id="fontLabel">Text: Large</span>
+        </button>
+
+        <!-- Screen Reader Audio Mode -->
+        <button id="screenReaderBtn" class="control-btn active" onclick="toggleAutoNarration()" aria-label="Toggle automatic voice narration on focus">
+          <!-- Volume High Speaker SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <span id="audioModeLabel">Audio Voice: ON</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Live Spoken Assistant Banner & Audio Controls -->
+  <div class="voice-status-banner" role="status" aria-live="polite">
+    <div class="voice-message-display">
+      <div id="voicePulse" class="voice-pulse-dot" aria-hidden="true"></div>
+      <div id="voiceStatusText">Voice Assistant is ready. Press the Speak button below or use Spacebar.</div>
+    </div>
+    <div class="voice-action-group">
+      <button class="control-btn" onclick="repeatLastSpeech()" aria-label="Repeat last spoken message">
+        <!-- Replay Audio SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        <span id="repeatBtnText">Repeat Audio</span>
+      </button>
+      <button class="control-btn" onclick="stopSpeech()" aria-label="Stop current audio speech">
+        <!-- Stop Square SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        <span id="stopBtnText">Stop Voice</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Giant Accessible Voice Button (Primary Interaction) -->
+  <div class="mic-hero-wrapper">
+    <button id="giantMicBtn" class="giant-mic-btn" onclick="toggleVoiceListening()" aria-label="Tap to speak your banking command. Shortcut: Spacebar">
+      <div class="mic-icon-wrapper" aria-hidden="true">
+        <!-- High Precision Microphone SVG -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+      </div>
+      <span id="giantMicText">TAP TO SPEAK BANKING COMMAND</span>
+      <span style="font-size: 0.8em; opacity: 0.85; font-weight: 600;">(Or Press Space)</span>
+    </button>
+  </div>
+
+  <!-- Demo / Hackathon Judge Voice Simulator Chips -->
+  <div class="voice-simulator-bar">
+    <div class="sim-container">
+      <div class="sim-title">
+        <span style="display: flex; align-items: center; gap: 6px;">
+          <!-- Sparkle / Fast Action SVG -->
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-accent);"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Quick Voice Test Shortcuts (For noisy hackathon hall or testing without mic):</span>
+        </span>
+        <span style="font-size: 11px; opacity: 0.7;">Simulates Speech Recognition</span>
+      </div>
+      <div class="sim-buttons">
+        <button class="sim-chip" onclick="simulateVoiceCommand('What is my balance?')">
+          <!-- Wallet SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+          <span>"What is my balance?"</span>
+        </button>
+
+        <button class="sim-chip" onclick="simulateVoiceCommand('Send 500 rupees to Priya')">
+          <!-- Send Arrow SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span>"Send ₹500 to Priya"</span>
+        </button>
+
+        <button class="sim-chip" onclick="simulateVoiceCommand('Send 25000 rupees to unknown lucky prize')">
+          <!-- Alert Warning SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--danger-color);"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>"Send ₹25,000 to Prize Scam" (Fraud Test)</span>
+        </button>
+
+        <button class="sim-chip" onclick="simulateVoiceCommand('Read my passbook transactions')">
+          <!-- File Text SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>"Read recent transactions"</span>
+        </button>
+
+        <button class="sim-chip" onclick="simulateVoiceCommand('Help scam emergency freeze account')">
+          <!-- Shield Lock SOS SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--danger-color);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>"SOS / Freeze Account"</span>
+        </button>
+
+        <button class="sim-chip" onclick="simulateVoiceCommand('எனது கணக்கு இருப்பு என்ன?')">
+          <!-- Language Glyph SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-accent);"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>"இருப்பு என்ன?" (Tamil)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Banking Interface -->
+  <main id="main-content">
+
+    <!-- Account Details Hero Card -->
+    <section class="account-hero-card" aria-label="Account Overview">
+      <div class="account-header">
+        <div>
+          <div class="account-holder-name" id="userNameDisplay">
+            <!-- User Check Verified SVG -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-accent);" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+            <span>Thiru. S. Ramanathan</span>
+          </div>
+          <div style="font-size: 0.9em; color: var(--text-secondary); margin-top: 3px;" id="userAccountNum">
+            A/C: •••• •••• 2348 | Union Bank / Canara Bank
+          </div>
+        </div>
+        <div class="account-category-pill" id="userAccBadge">
+          <!-- Senior Citizen Shield SVG -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>SENIOR CITIZEN PENSION A/C</span>
+        </div>
+      </div>
+
+      <div class="account-balance-section">
+        <div>
+          <div class="balance-label" id="balanceLabelText">AVAILABLE BALANCE</div>
+          <div class="balance-amount" id="balanceDisplay">₹48,250.00</div>
+          <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 2px;" id="frozenStatusNotice">
+            Account Status: Active & Secured with AI Fraud Shield
+          </div>
+        </div>
+        <div class="balance-actions">
+          <button class="control-btn" style="min-height: 52px;" onclick="speakBalance()" aria-label="Speak balance out loud">
+            <!-- Speaker Wave SVG -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <span id="readBalBtnText">Read Balance Aloud</span>
+          </button>
+          <button class="control-btn" style="min-height: 52px;" onclick="toggleMaskBalance()" aria-label="Hide or reveal balance numbers on screen">
+            <!-- Eye SVG -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="maskBtnText">Mask / Unmask</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Giant Tactile Banking Action Tiles -->
+    <section class="actions-grid" aria-label="Banking Services">
+      <!-- Tile 1: Check Balance -->
+      <button class="action-tile" onclick="speakBalance()" onfocus="narrateElement(this)" aria-label="Check Balance: Speak balance and account status">
+        <div class="action-icon-box gold" aria-hidden="true">
+          <!-- Wallet SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+        </div>
+        <div class="action-title" id="tileBalTitle">Check Balance</div>
+        <div class="action-desc" id="tileBalDesc">Hear your current bank balance and recent credits in clear audio.</div>
+      </button>
+
+      <!-- Tile 2: Send Money -->
+      <button class="action-tile" onclick="openTransferModal()" onfocus="narrateElement(this)" aria-label="Send Money: Voice-guided transfer with AI cyber fraud protection">
+        <div class="action-icon-box emerald" aria-hidden="true">
+          <!-- Send Plane SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div>
+        <div class="action-title" id="tileSendTitle">Send Money</div>
+        <div class="action-desc" id="tileSendDesc">Step-by-step voice guided transfer with AI cyber scam detection.</div>
+      </button>
+
+      <!-- Tile 3: Passbook -->
+      <button class="action-tile" onclick="openPassbookModal()" onfocus="narrateElement(this)" aria-label="Voice Passbook: Hear recent pension credits and payments">
+        <div class="action-icon-box blue" aria-hidden="true">
+          <!-- History Book SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+        </div>
+        <div class="action-title" id="tilePassbookTitle">Voice Passbook</div>
+        <div class="action-desc" id="tilePassbookDesc">Listen to recent pension credits and utility bill transactions.</div>
+      </button>
+
+      <!-- Tile 4: Emergency SOS / Anti-Scam Shield -->
+      <button class="action-tile tile-danger" onclick="triggerEmergencySOS()" onfocus="narrateElement(this)" aria-label="Emergency SOS: Instantly freeze account and alert guardian Priya">
+        <div class="action-icon-box danger" aria-hidden="true">
+          <!-- Shield Alert SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="action-title" id="tileSosTitle">Anti-Scam & SOS</div>
+        <div class="action-desc" id="tileSosDesc">1-Tap emergency freeze to prevent phone scam fraud. Alerts daughter Priya.</div>
+      </button>
+    </section>
+
+    <!-- Features Highlight Banner matching Hackathon Deck -->
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--card-radius); padding: 20px; margin-top: 10px;">
+      <h3 style="color: var(--text-accent); margin-bottom: 10px; font-size: calc(16.5px * var(--font-scale)); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+        <!-- Sparkle SVG -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>INNOVEX Hackathon Innovations in this Prototype:</span>
+      </h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; font-size: calc(13px * var(--font-scale)); color: var(--text-secondary);">
+        <div><strong style="color: var(--text-primary);">Voice-Guided Banking:</strong> Native WebSpeech recognition with Tamil & English NLP.</div>
+        <div><strong style="color: var(--text-primary);">AI Fraud Detection:</strong> Flags senior cybercrime patterns (₹7,769 Cr lost in 2025).</div>
+        <div><strong style="color: var(--text-primary);">Ultra-Accessible UI:</strong> High contrast AAA, 80px+ tremor-safe touch targets.</div>
+        <div><strong style="color: var(--text-primary);">Explicit Audio Confirm:</strong> Reads recipient & amount aloud before PIN verification.</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Transfer Money Modal -->
+  <div id="transferModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="transferModalHeading">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="transferModalHeading">
+          <!-- Send SVG -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-accent);"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span>Send Money (Voice-Guided)</span>
+        </h2>
+        <button class="close-modal-btn" onclick="closeTransferModal()" aria-label="Close transfer dialog">✕</button>
+      </div>
+
+      <!-- Step 1: Select Beneficiary -->
+      <div id="transferStep1">
+        <p style="font-size: 1.05em; color: var(--text-secondary); margin-bottom: 12px;" id="selectRecipientPrompt">
+          Step 1: Choose or speak the recipient's name:
+        </p>
+
+        <div class="beneficiary-list" role="list">
+          <div class="beneficiary-item" onclick="selectBeneficiary(0)" onfocus="narrateElement(this)" tabindex="0" role="button">
+            <div>
+              <div style="font-weight: 700; font-size: 1.05em; color: var(--text-primary);">Priya (Daughter) • பிரியா (மகள்)</div>
+              <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 2px;">A/C: •••• 9812 | HDFC UPI</div>
+            </div>
+            <span class="badge-pill" style="border-color: #10B981; color: #10B981;">✓ Trusted Family</span>
+          </div>
+
+          <div class="beneficiary-item" onclick="selectBeneficiary(1)" onfocus="narrateElement(this)" tabindex="0" role="button">
+            <div>
+              <div style="font-weight: 700; font-size: 1.05em; color: var(--text-primary);">Apollo Pharmacy (Monthly Meds)</div>
+              <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 2px;">Healthcare Provider | ICICI UPI</div>
+            </div>
+            <span class="badge-pill" style="border-color: #10B981; color: #10B981;">✓ Verified Utility</span>
+          </div>
+
+          <div class="beneficiary-item" onclick="selectBeneficiary(2)" onfocus="narrateElement(this)" tabindex="0" role="button">
+            <div>
+              <div style="font-weight: 700; font-size: 1.05em; color: var(--text-primary);">TNEB Electricity Bill (மின் கட்டணம்)</div>
+              <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 2px;">Tamil Nadu Electricity Board | SBI</div>
+            </div>
+            <span class="badge-pill" style="border-color: #10B981; color: #10B981;">✓ Verified Bill</span>
+          </div>
+
+          <!-- High Risk Scam Mule Account for Demo -->
+          <div class="beneficiary-item flagged-scam" onclick="selectBeneficiary(3)" onfocus="narrateElement(this)" tabindex="0" role="button">
+            <div>
+              <div style="font-weight: 700; font-size: 1.05em; color: #F87171;">Unknown Caller / Prize Claim (Mule A/C)</div>
+              <div style="font-size: 0.85em; color: #FCA5A5; margin-top: 2px;">luckywinner2026@paytm | Unknown Caller</div>
+            </div>
+            <span class="badge-pill" style="border-color: var(--danger-color); color: var(--danger-color);">🚨 FLAGGED SCAM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Amount Entry -->
+      <div id="transferStep2" style="display: none;">
+        <p style="font-size: 1.05em; color: var(--text-secondary); margin-bottom: 8px;">
+          Sending to: <strong id="selectedRecipientName" style="color: var(--text-accent);">Priya</strong>
+        </p>
+
+        <label for="transferAmountInput" style="font-size: 0.9em; color: var(--text-secondary); display: block; margin-bottom: 6px;">Enter or Speak Amount in Rupees:</label>
+        <input type="number" id="transferAmountInput" class="giant-input" value="500" min="1" step="50" aria-label="Amount in rupees">
+
+        <div class="amount-presets">
+          <button class="amount-chip" onclick="setPresetAmount(100)">₹100</button>
+          <button class="amount-chip" onclick="setPresetAmount(500)">₹500</button>
+          <button class="amount-chip" onclick="setPresetAmount(1000)">₹1,000</button>
+          <button class="amount-chip" onclick="setPresetAmount(5000)">₹5,000</button>
+        </div>
+
+        <!-- AI Fraud Alert Box (Conditional) -->
+        <div id="fraudWarningBox" class="fraud-warning-box" style="display: none;">
+          <div class="fraud-warning-title">
+            <!-- Shield Alert SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="fraudTitle">AI CYBER FRAUD SHIELD WARNING</span>
+          </div>
+          <p class="fraud-warning-text" id="fraudWarningDesc">
+            Warning: This recipient has been flagged on the National Cyber Crime Portal (1930) for senior citizen lottery scams. In 2025, seniors lost over ₹7,769 Crore to similar calls.
+          </p>
+        </div>
+
+        <div class="modal-btn-row">
+          <button class="modal-cancel-btn" onclick="goToStep(1)">← Back</button>
+          <button class="modal-primary-btn" onclick="reviewTransfer()">Review & Confirm →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Explicit Confirmation -->
+      <div id="transferStep3" style="display: none;">
+        <div class="confirmation-summary-card">
+          <div class="confirm-title" id="confirmSummaryPrompt">EXPLICIT AUDIO CONFIRMATION</div>
+          <div class="confirm-amount" id="confirmSummaryAmount">₹500.00</div>
+          <div class="confirm-recipient" id="confirmSummaryTo">To: Priya (Daughter)</div>
+          <div style="font-size: 0.85em; color: #10B981; margin-top: 8px; font-weight: 600;">Bank Fee: ₹0.00 | Immediate UPI/IMPS</div>
+        </div>
+
+        <p style="text-align: center; font-size: 0.95em; color: var(--text-secondary); margin-bottom: 12px;">
+          Say <strong>"Confirm"</strong> or tap the Confirm button to proceed with Security PIN.
+        </p>
+
+        <div class="modal-btn-row">
+          <button class="modal-cancel-btn" onclick="closeTransferModal()">Cancel</button>
+          <button class="modal-primary-btn" style="background: var(--accent-color); color: #0B132B;" onclick="goToStep(4)">
+            ✓ Confirm Transfer
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Secure PIN Keypad -->
+      <div id="transferStep4" style="display: none;">
+        <p style="text-align: center; font-size: 1.05em; color: var(--text-primary); margin-bottom: 4px; font-weight: 700;">
+          Enter 4-Digit Security PIN:
+        </p>
+        <p style="text-align: center; font-size: 0.85em; color: var(--text-secondary); margin-bottom: 12px;">
+          Demo PIN is <strong>1 2 3 4</strong> (Buttons play distinct privacy tones)
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 14px;">
+          <input type="password" id="pinDisplay" class="giant-input" style="letter-spacing: 12px; max-width: 240px;" readonly value="">
+        </div>
+
+        <div class="pin-keypad">
+          <button class="pin-btn" onclick="pressPin('1')">1</button>
+          <button class="pin-btn" onclick="pressPin('2')">2</button>
+          <button class="pin-btn" onclick="pressPin('3')">3</button>
+          <button class="pin-btn" onclick="pressPin('4')">4</button>
+          <button class="pin-btn" onclick="pressPin('5')">5</button>
+          <button class="pin-btn" onclick="pressPin('6')">6</button>
+          <button class="pin-btn" onclick="pressPin('7')">7</button>
+          <button class="pin-btn" onclick="pressPin('8')">8</button>
+          <button class="pin-btn" onclick="pressPin('9')">9</button>
+          <button class="pin-btn btn-clear" onclick="clearPin()">Clear</button>
+          <button class="pin-btn" onclick="pressPin('0')">0</button>
+          <button class="pin-btn btn-submit" onclick="submitPin()">Pay</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Success Receipt -->
+      <div id="transferStep5" style="display: none; text-align: center;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); border: 2px solid #10B981; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; color: #10B981;" aria-hidden="true">
+          <!-- Checkmark SVG -->
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 style="font-size: 1.5em; color: #10B981; margin-bottom: 6px; font-weight: 800;">Transfer Successful!</h3>
+        <p id="receiptSpokenText" style="font-size: 1.05em; color: var(--text-primary); margin-bottom: 16px;"></p>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; text-align: left; font-size: 0.9em; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6;">
+          <div><strong style="color: var(--text-primary);">Transaction ID:</strong> <span id="receiptTxnId">TXN998241</span></div>
+          <div><strong style="color: var(--text-primary);">Amount Sent:</strong> <span id="receiptAmount">₹500.00</span></div>
+          <div><strong style="color: var(--text-primary);">Recipient:</strong> <span id="receiptRecipient">Priya (Daughter)</span></div>
+          <div><strong style="color: var(--text-primary);">Remaining Balance:</strong> <span id="receiptNewBalance">₹47,750.00</span></div>
+          <div><strong style="color: var(--text-primary);">SMS Sent To:</strong> +91 98401 23456 (Guardian alerted)</div>
+        </div>
+
+        <button class="modal-primary-btn" onclick="closeTransferModal()">Done / Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Passbook Modal -->
+  <div id="passbookModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="passbookModalHeading">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="passbookModalHeading">
+          <!-- Passbook Document SVG -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-accent);"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Voice Passbook & History</span>
+        </h2>
+        <button class="close-modal-btn" onclick="closePassbookModal()" aria-label="Close passbook">✕</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="font-size: 0.9em; color: var(--text-secondary);">Recent 4 Transactions:</span>
+        <button class="control-btn" style="min-height: 38px; padding: 4px 10px;" onclick="readAllTransactionsAloud()">
+          <!-- Speaker SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <span>Read All Aloud</span>
+        </button>
+      </div>
+
+      <div class="transactions-list" id="passbookList">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="modal-btn-row">
+        <button class="modal-primary-btn" onclick="closePassbookModal()">Close Passbook</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency SOS Modal -->
+  <div id="sosModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="sosModalHeading">
+    <div class="modal-card" style="border-color: rgba(239, 68, 68, 0.6);">
+      <div class="modal-header">
+        <h2 id="sosModalHeading" style="color: var(--danger-color);">
+          <!-- Shield Alert SVG -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Emergency SOS & Anti-Scam Shield</span>
+        </h2>
+        <button class="close-modal-btn" onclick="closeSosModal()" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 16px;">
+        <div style="width: 68px; height: 68px; border-radius: 50%; background: var(--danger-bg); border: 2px solid var(--danger-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: var(--danger-color);" aria-hidden="true">
+          <!-- Shield Lock SVG -->
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3 id="sosStatusText" style="color: var(--text-primary); font-size: 1.25em; margin-bottom: 8px; font-weight: 800;">
+          Account Protection Protocol
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.95em; line-height: 1.45;">
+          If an unknown caller, fake police officer, or electricity board impersonator is pressuring you to send money, activate SOS immediately.
+        </p>
+      </div>
+
+      <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 15px; margin-bottom: 18px;">
+        <div style="font-weight: 800; color: #F87171; margin-bottom: 6px; font-size: 0.9em; letter-spacing: 0.3px;">SOS ACTIONS EXECUTED:</div>
+        <ul style="padding-left: 18px; font-size: 0.9em; color: var(--text-primary); line-height: 1.55;">
+          <li>Bank account frozen immediately to block any outgoing transactions.</li>
+          <li>Automatic SMS and Call alert sent to Daughter Priya (+91 98401 23456).</li>
+          <li>Incident flagged for National Cyber Crime Portal (Helpline 1930).</li>
+        </ul>
+      </div>
+
+      <div class="modal-btn-row">
+        <button id="freezeToggleBtn" class="modal-danger-btn" onclick="toggleAccountFreeze()">
+          <!-- Lock SVG -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>FREEZE MY ACCOUNT NOW</span>
+        </button>
+        <button class="modal-cancel-btn" onclick="closeSosModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pitch Deck Info Modal -->
+  <div id="pitchModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="pitchModalHeading">
+    <div class="modal-card" style="max-width: 780px;">
+      <div class="modal-header">
+        <h2 id="pitchModalHeading">
+          <!-- Presentation SVG -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-accent);"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>DEXATHON 2026 • INNOVEX Pitch Guide</span>
+        </h2>
+        <button class="close-modal-btn" onclick="closePitchModal()" aria-label="Close pitch info">✕</button>
+      </div>
+
+      <div class="pitch-grid">
+        <div class="pitch-box">
+          <h4>1. Problem Statement (Slide 2)</h4>
+          <p>• In 2025, over <strong>1.03 lakh senior citizens</strong> reported cyber fraud losses in India.</p>
+          <p>• Combined losses reached <strong>₹7,769.63 crore</strong>.</p>
+          <p>• Seniors and visually impaired users face digital exclusion and aggressive phone scam coercion.</p>
+        </div>
+
+        <div class="pitch-box">
+          <h4>2. Innovations (Slide 2 & 3)</h4>
+          <ul>
+            <li><strong>Voice-Guided Banking:</strong> Full STT/TTS in English & Tamil.</li>
+            <li><strong>AI Fraud Detection:</strong> Real-time heuristic check for mule UPIs and extortion keywords.</li>
+            <li><strong>Large Tactile UI:</strong> High contrast, WCAG AAA, 80px+ tremor-safe targets.</li>
+          </ul>
+        </div>
+
+        <div class="pitch-box">
+          <h4>3. Technical Stack (Slide 3)</h4>
+          <ul>
+            <li><strong>Frontend:</strong> Accessible Web / HTML5 / CSS3 / Web Speech API / Web Audio API.</li>
+            <li><strong>Backend:</strong> Python Flask REST API with mock banking models.</li>
+            <li><strong>Security:</strong> Explicit voice confirmation, audio-scramble PIN, 1-tap SOS freeze.</li>
+          </ul>
+        </div>
+
+        <div class="pitch-box">
+          <h4>4. Feasibility & Viability (Slide 4 & 5)</h4>
+          <p>• <strong>Social:</strong> Financial independence for elderly & visually impaired.</p>
+          <p>• <strong>Economic:</strong> Low-cost, runs on standard smartphones/browsers without expensive proprietary braille hardware.</p>
+          <p>• <strong>Partners:</strong> Union Bank of India, Bank of Baroda, TCS, NGOs.</p>
+        </div>
+      </div>
+
+      <div class="modal-btn-row">
+        <button class="modal-primary-btn" onclick="closePitchModal()">Back to Banking App</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>Accessible Banking for the Visually Impaired and Elderly • Team INNOVEX (Team ID: DEX26121)</div>
+    <div style="margin-top: 4px; font-size: 0.88em; color: var(--text-secondary);">
+      SATHYABAMA Institute of Science and Technology • Theme: FinTech & EdTech (PS Category: Software)
+    </div>
+  </footer>
+
+  <!-- Sound Synthesizer & Application Logic -->
+  <script>
+    /* =====================================================================
+       1. STATE & DATA MANAGEMENT
+       ===================================================================== */
+    const state = {
+      language: 'en', // 'en' or 'ta' (Tamil)
+      theme: 'navy-gold', // 'navy-gold', 'gold-black', 'blue-white', 'light-senior'
+      fontSizeIndex: 1, // 0: Normal, 1: Large, 2: X-Large, 3: Giant
+      fontScales: [1.0, 1.12, 1.28, 1.45],
+      fontLabels: ['Normal', 'Large', 'Extra Large', 'Giant'],
+      autoNarration: true,
+      isListening: false,
+      isFrozen: false,
+      balance: 48250.00,
+      isBalanceMasked: false,
+      lastSpokenText: '',
+      speechRate: 0.95, // comfortable pace for elderly
+      transfer: {
+        step: 1,
+        beneficiary: null,
+        amount: 500,
+        pin: '',
+        isHighRisk: false
+      }
+    };
+
+    const beneficiaries = [
+      { id: 0, name: "Priya (Daughter)", tamilName: "பிரியா (மகள்)", upi: "priya.ram@okhdfc", isScam: false, category: "Family" },
+      { id: 1, name: "Apollo Pharmacy", tamilName: "அப்பல்லோ மருந்தகம்", upi: "apollo.meds@icici", isScam: false, category: "Healthcare" },
+      { id: 2, name: "TNEB Electricity Bill", tamilName: "மின் கட்டணம் (TNEB)", upi: "tneb.chennai@sbi", isScam: false, category: "Utilities" },
+      { id: 3, name: "Unknown Caller / Prize Claim", tamilName: "தெரியாத நபர் / பரிசு கூற்று (மோசடி)", upi: "luckywinner2026@paytm", isScam: true, category: "Scam" }
+    ];
+
+    let transactions = [
+      { id: "TXN90211", date: "Today, 10:15 AM", title: "Pension Credit (Central Govt)", titleTa: "ஓய்வூதிய வரவு (மத்திய அரசு)", type: "credit", amount: 28500.00 },
+      { id: "TXN89104", date: "Yesterday, 04:30 PM", title: "Apollo Pharmacy (Monthly Meds)", titleTa: "அப்பல்லோ மருந்தகம்", type: "debit", amount: 1450.00 },
+      { id: "TXN87321", date: "24 Oct 2026", title: "TNEB Electricity Bill Paid", titleTa: "மின் கட்டணம் செலுத்தியது", type: "debit", amount: 820.00 },
+      { id: "TXN86440", date: "20 Oct 2026", title: "Transfer from Priya (Daughter)", titleTa: "பிரியாவிடமிருந்து வரவு", type: "credit", amount: 5000.00 }
+    ];
+
+    /* =====================================================================
+       2. WEB AUDIO API SYNTHESIZER (Tactile Audio Cues / Earcons)
+       ===================================================================== */
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Pleasant mic chime
+    function playMicStartSound() {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+      } catch(e) {}
+    }
+
+    // Mic stop sound
+    function playMicStopSound() {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+      } catch(e) {}
+    }
+
+    // Success Chime
+    function playSuccessChime() {
+      try {
+        const ctx = getAudioContext();
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
+          gain.gain.setValueAtTime(0.25, ctx.currentTime + idx * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + idx * 0.1 + 0.35);
+          osc.start(ctx.currentTime + idx * 0.1);
+          osc.stop(ctx.currentTime + idx * 0.1 + 0.35);
+        });
+      } catch(e) {}
+    }
+
+    // Fraud Alarm Sound
+    function playFraudAlarm() {
+      try {
+        const ctx = getAudioContext();
+        for (let i = 0; i < 3; i++) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sawtooth';
+          const t = ctx.currentTime + i * 0.25;
+          osc.frequency.setValueAtTime(700, t);
+          osc.frequency.setValueAtTime(350, t + 0.12);
+          gain.gain.setValueAtTime(0.3, t);
+          gain.gain.linearRampToValueAtTime(0.01, t + 0.24);
+          osc.start(t);
+          osc.stop(t + 0.24);
+        }
+      } catch(e) {}
+    }
+
+    // Keypad Tone
+    function playKeypadTone(digit) {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        const num = parseInt(digit) || 5;
+        const freq = 400 + (num * 45);
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      } catch(e) {}
+    }
+
+    /* =====================================================================
+       3. TEXT-TO-SPEECH (TTS) & VOICE NARRATION
+       ===================================================================== */
+    function speak(text, forceLanguage = null) {
+      if (!('speechSynthesis' in window)) return;
+
+      window.speechSynthesis.cancel();
+      state.lastSpokenText = text;
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      const targetLang = forceLanguage || (state.language === 'ta' ? 'ta-IN' : 'en-IN');
+      utterance.lang = targetLang;
+      utterance.rate = state.speechRate;
+      utterance.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        const matchedVoice = voices.find(v => v.lang.startsWith(targetLang.split('-')[0])) || voices[0];
+        if (matchedVoice) utterance.voice = matchedVoice;
+      }
+
+      const pulse = document.getElementById('voicePulse');
+      const statusText = document.getElementById('voiceStatusText');
+
+      utterance.onstart = () => {
+        pulse.className = 'voice-pulse-dot speaking';
+        statusText.textContent = `Speaking: "${text}"`;
+      };
+
+      utterance.onend = () => {
+        pulse.className = 'voice-pulse-dot';
+        statusText.textContent = state.language === 'ta' ? 'குரல் உதவியாளர் தயார்.' : 'Voice Assistant is ready.';
+      };
+
+      utterance.onerror = () => {
+        pulse.className = 'voice-pulse-dot';
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function repeatLastSpeech() {
+      if (state.lastSpokenText) {
+        speak(state.lastSpokenText);
+      } else {
+        speak(state.language === 'ta' ? 'முந்தைய ஆடியோ எதுவும் இல்லை.' : 'No previous audio to repeat.');
+      }
+    }
+
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.getElementById('voicePulse').className = 'voice-pulse-dot';
+      document.getElementById('voiceStatusText').textContent = 'Voice stopped.';
+    }
+
+    function narrateElement(el) {
+      if (!state.autoNarration) return;
+      const textToRead = el.getAttribute('aria-label') || el.innerText || '';
+      if (textToRead) {
+        speak(textToRead);
+      }
+    }
+
+    function toggleAutoNarration() {
+      state.autoNarration = !state.autoNarration;
+      const btn = document.getElementById('screenReaderBtn');
+      const label = document.getElementById('audioModeLabel');
+      if (state.autoNarration) {
+        btn.classList.add('active');
+        label.textContent = state.language === 'ta' ? 'குரல் வழிகாட்டி: ON' : 'Audio Voice: ON';
+        speak(state.language === 'ta' ? 'தானியங்கி குரல் வழிகாட்டுதல் இயக்கப்பட்டது.' : 'Automatic voice narration turned on.');
+      } else {
+        btn.classList.remove('active');
+        label.textContent = state.language === 'ta' ? 'குரல் வழிகாட்டி: OFF' : 'Audio Voice: OFF';
+      }
+    }
+
+    /* =====================================================================
+       4. SPEECH RECOGNITION (STT) & VOICE COMMAND PARSING
+       ===================================================================== */
+    let recognition = null;
+
+    function initSpeechRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return null;
+
+      const rec = new SpeechRecognition();
+      rec.continuous = false;
+      rec.interimResults = false;
+      rec.lang = state.language === 'ta' ? 'ta-IN' : 'en-IN';
+
+      rec.onstart = () => {
+        state.isListening = true;
+        playMicStartSound();
+        document.getElementById('giantMicBtn').classList.add('active-listening');
+        document.getElementById('giantMicText').textContent = state.language === 'ta' ? 'கேட்கிறது... கட்டளையை கூறவும்' : 'LISTENING... SPEAK NOW';
+        document.getElementById('voicePulse').className = 'voice-pulse-dot listening';
+        document.getElementById('voiceStatusText').textContent = 'Listening to your voice...';
+      };
+
+      rec.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('voiceStatusText').textContent = `Heard: "${transcript}"`;
+        handleVoiceInput(transcript);
+      };
+
+      rec.onerror = (e) => {
+        state.isListening = false;
+        playMicStopSound();
+        resetMicUI();
+        document.getElementById('voiceStatusText').textContent = `Voice recognition error: ${e.error}. Try the quick simulation chips.`;
+      };
+
+      rec.onend = () => {
+        state.isListening = false;
+        playMicStopSound();
+        resetMicUI();
+      };
+
+      return rec;
+    }
+
+    function resetMicUI() {
+      document.getElementById('giantMicBtn').classList.remove('active-listening');
+      document.getElementById('giantMicText').textContent = state.language === 'ta' ? 'வங்கி கட்டளை பேச தட்டவும்' : 'TAP TO SPEAK BANKING COMMAND';
+      document.getElementById('voicePulse').className = 'voice-pulse-dot';
+    }
+
+    function toggleVoiceListening() {
+      if (!recognition) {
+        recognition = initSpeechRecognition();
+      }
+
+      if (!recognition) {
+        const fallbackMsg = state.language === 'ta' 
+          ? 'இந்த உலாவியில் மைக்ரோஃபோன் ஆதரிக்கப்படவில்லை. கீழே உள்ள விரைவு சோதனை பொத்தான்களைப் பயன்படுத்தவும்.'
+          : 'Web Speech API is not supported in this browser. Please use the Quick Voice Test buttons below.';
+        speak(fallbackMsg);
+        alert(fallbackMsg);
+        return;
+      }
+
+      if (state.isListening) {
+        recognition.stop();
+      } else {
+        recognition.lang = state.language === 'ta' ? 'ta-IN' : 'en-IN';
+        try {
+          recognition.start();
+        } catch(e) {
+          recognition.stop();
+        }
+      }
+    }
+
+    function simulateVoiceCommand(text) {
+      document.getElementById('voiceStatusText').textContent = `Simulated Voice: "${text}"`;
+      handleVoiceInput(text);
+    }
+
+    function handleVoiceInput(rawText) {
+      const text = rawText.toLowerCase().trim();
+
+      // Check balance
+      if (text.includes('balance') || text.includes('how much') || text.includes('money') || text.includes('இருப்பு') || text.includes('பணம் எவ்வளவு')) {
+        speakBalance();
+      }
+      // Send money / transfer
+      else if (text.includes('send') || text.includes('pay') || text.includes('transfer') || text.includes('அனுப்பு') || text.includes('செலுத்து')) {
+        openTransferModal();
+        if (text.includes('priya') || text.includes('மகள்') || text.includes('daughter')) {
+          selectBeneficiary(0);
+        } else if (text.includes('apollo') || text.includes('pharmacy') || text.includes('மருந்தகம்')) {
+          selectBeneficiary(1);
+        } else if (text.includes('prize') || text.includes('unknown') || text.includes('scam') || text.includes('மோசடி')) {
+          selectBeneficiary(3);
+        }
+
+        const numbers = text.match(/\d+/g);
+        if (numbers && numbers.length > 0) {
+          const amt = parseInt(numbers[0]);
+          document.getElementById('transferAmountInput').value = amt;
+          state.transfer.amount = amt;
+          setTimeout(() => reviewTransfer(), 500);
+        }
+      }
+      // Passbook
+      else if (text.includes('passbook') || text.includes('transaction') || text.includes('statement') || text.includes('history') || text.includes('பரிவர்த்தனை') || text.includes('அறிக்கை')) {
+        openPassbookModal();
+        setTimeout(() => readAllTransactionsAloud(), 500);
+      }
+      // Emergency SOS / Scam
+      else if (text.includes('help') || text.includes('freeze') || text.includes('sos') || text.includes('scam') || text.includes('fraud') || text.includes('அவசரம்') || text.includes('முடக்கு')) {
+        triggerEmergencySOS();
+      }
+      // Confirm action
+      else if (text.includes('confirm') || text.includes('yes') || text.includes('proceed') || text.includes('சரி') || text.includes('ஆம்')) {
+        if (state.transfer.step === 3) {
+          goToStep(4);
+        }
+      }
+      // Cancel action
+      else if (text.includes('cancel') || text.includes('stop') || text.includes('no') || text.includes('ரத்து')) {
+        closeTransferModal();
+        speak(state.language === 'ta' ? 'பரிவர்த்தனை ரத்து செய்யப்பட்டது.' : 'Transfer canceled.');
+      }
+      else {
+        const msg = state.language === 'ta' 
+          ? `கட்டளை புரிகிறது: "${rawText}". இருப்பு சரிபார்க்க, பணம் அனுப்ப, அல்லது அவசர உதவி என்று கூறவும்.`
+          : `Understood: "${rawText}". You can say: Check balance, Send 500 to Priya, Show passbook, or Help.`;
+        speak(msg);
+      }
+    }
+
+    /* =====================================================================
+       5. CORE BANKING WORKFLOWS
+       ===================================================================== */
+    function speakBalance() {
+      if (state.isFrozen) {
+        const frozenMsg = state.language === 'ta' 
+          ? 'உங்கள் கணக்கு தற்போது முடக்கப்பட்டுள்ளது. அவசர உதவி திரையில் மீட்டமைக்கவும்.'
+          : 'Your account is currently frozen for security. Please unfreeze in SOS protection.';
+        speak(frozenMsg);
+        return;
+      }
+
+      const balFormatted = Math.floor(state.balance).toLocaleString('en-IN');
+      const msg = state.language === 'ta'
+        ? `உங்கள் சேமிப்பு கணக்கு இருப்பு ${balFormatted} ரூபாய் ஆகும். கணக்கு நிலை பாதுகாப்பானது.`
+        : `Your current bank balance is ${balFormatted} rupees. Your account is secured.`;
+      speak(msg);
+    }
+
+    function toggleMaskBalance() {
+      state.isBalanceMasked = !state.isBalanceMasked;
+      const el = document.getElementById('balanceDisplay');
+      if (state.isBalanceMasked) {
+        el.textContent = '₹ ••••••';
+        speak(state.language === 'ta' ? 'இருப்பு மறைக்கப்பட்டது.' : 'Balance amount masked for privacy.');
+      } else {
+        el.textContent = `₹${state.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+        speak(state.language === 'ta' ? 'இருப்பு காட்டப்படுகிறது.' : 'Balance amount revealed.');
+      }
+    }
+
+    function openTransferModal() {
+      if (state.isFrozen) {
+        alert(state.language === 'ta' ? 'கணக்கு முடக்கப்பட்டுள்ளது.' : 'Account is currently frozen. Unfreeze via SOS.');
+        return;
+      }
+      document.getElementById('transferModal').classList.add('open');
+      goToStep(1);
+      const msg = state.language === 'ta'
+        ? 'பணம் அனுப்பும் திரை திறக்கப்பட்டது. பெறுநரை தேர்வு செய்யவும் அல்லது பெயரை கூறவும்.'
+        : 'Send money screen opened. Please select or speak the recipient name: Priya, Apollo Pharmacy, or Electricity Bill.';
+      speak(msg);
+    }
+
+    function closeTransferModal() {
+      document.getElementById('transferModal').classList.remove('open');
+      state.transfer.step = 1;
+      state.transfer.pin = '';
+    }
+
+    function goToStep(stepNum) {
+      state.transfer.step = stepNum;
+      for (let i = 1; i <= 5; i++) {
+        const stepEl = document.getElementById(`transferStep${i}`);
+        if (stepEl) stepEl.style.display = (i === stepNum) ? 'block' : 'none';
+      }
+    }
+
+    function selectBeneficiary(id) {
+      const ben = beneficiaries[id];
+      state.transfer.beneficiary = ben;
+      state.transfer.isHighRisk = ben.isScam;
+
+      document.getElementById('selectedRecipientName').textContent = state.language === 'ta' ? ben.tamilName : ben.name;
+      goToStep(2);
+
+      const warningBox = document.getElementById('fraudWarningBox');
+      if (ben.isScam) {
+        warningBox.style.display = 'block';
+        playFraudAlarm();
+        const scamWarning = state.language === 'ta'
+          ? 'எச்சரிக்கை! இந்த கணக்கு சைபர் மோசடி புகாரில் உள்ளது. மூத்த குடிமக்களை ஏமாற்றும் முயற்சி. இந்த பரிமாற்றத்தை தவிர்க்கவும்!'
+          : 'Warning! High fraud risk detected. This recipient was flagged on National Cyber Crime 1930 for senior lottery fraud. We strongly recommend canceling!';
+        speak(scamWarning);
+      } else {
+        warningBox.style.display = 'none';
+        const msg = state.language === 'ta'
+          ? `${ben.tamilName} தேர்வு செய்யப்பட்டார். அனுப்ப வேண்டிய தொகையை உள்ளிடவும்.`
+          : `Selected ${ben.name}. Please enter or select the transfer amount in rupees.`;
+        speak(msg);
+      }
+    }
+
+    function setPresetAmount(amt) {
+      document.getElementById('transferAmountInput').value = amt;
+      state.transfer.amount = amt;
+      speak(`${amt} ${state.language === 'ta' ? 'ரூபாய்' : 'rupees'}`);
+    }
+
+    function reviewTransfer() {
+      const amtInput = parseFloat(document.getElementById('transferAmountInput').value);
+      if (!amtInput || amtInput <= 0) {
+        speak(state.language === 'ta' ? 'சரியான தொகையை உள்ளிடவும்.' : 'Please enter a valid amount.');
+        return;
+      }
+      if (amtInput > state.balance) {
+        speak(state.language === 'ta' ? 'கணக்கில் போதிய பணம் இல்லை.' : 'Insufficient balance for this transfer.');
+        return;
+      }
+
+      state.transfer.amount = amtInput;
+      const ben = state.transfer.beneficiary;
+
+      if (amtInput >= 20000 && !ben.isScam) {
+        playFraudAlarm();
+        const highAlert = state.language === 'ta'
+          ? `எச்சரிக்கை! ${amtInput} ரூபாய் அதிக தொகையாகும். சைபர் மோசடி அழைப்பாளர் யாராவது வற்புறுத்துகிறார்களா என்று சரிபார்க்கவும்.`
+          : `Warning: ${amtInput} rupees is an unusually high amount. Confirm nobody on phone is coercing you.`;
+        speak(highAlert);
+      }
+
+      document.getElementById('confirmSummaryAmount').textContent = `₹${amtInput.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+      document.getElementById('confirmSummaryTo').textContent = `To: ${state.language === 'ta' ? ben.tamilName : ben.name}`;
+
+      goToStep(3);
+
+      const confirmSpeech = state.language === 'ta'
+        ? `தயவுசெய்து உறுதிப்படுத்தவும்: நீங்கள் ${amtInput} ரூபாயை ${ben.tamilName}-க்கு அனுப்புகிறீர்கள். உறுதிப்படுத்த ஆம் அல்லது சரி என்று கூறவும், ரத்து செய்ய வேண்டாம் என்று கூறவும்.`
+        : `Please confirm: You are sending ${amtInput} rupees to ${ben.name}. Say Confirm to proceed, or Cancel to go back.`;
+      speak(confirmSpeech);
+    }
+
+    // Keypad functions
+    function pressPin(digit) {
+      if (state.transfer.pin.length < 4) {
+        state.transfer.pin += digit;
+        playKeypadTone(digit);
+        updatePinDisplay();
+      }
+    }
+
+    function clearPin() {
+      state.transfer.pin = '';
+      playKeypadTone(1);
+      updatePinDisplay();
+    }
+
+    function updatePinDisplay() {
+      const masked = '• '.repeat(state.transfer.pin.length).trim();
+      document.getElementById('pinDisplay').value = masked;
+    }
+
+    function submitPin() {
+      if (state.transfer.pin.length !== 4) {
+        speak(state.language === 'ta' ? '4 இலக்க ரகசிய எண்ணை உள்ளிடவும்.' : 'Please enter 4 digits.');
+        return;
+      }
+
+      if (state.transfer.pin === '1234') {
+        executeTransferSuccess();
+      } else {
+        playFraudAlarm();
+        speak(state.language === 'ta' ? 'தவறான ரகசிய எண். மீண்டும் முயற்சிக்கவும்.' : 'Incorrect PIN. Please try again.');
+        clearPin();
+      }
+    }
+
+    function executeTransferSuccess() {
+      playSuccessChime();
+      const amt = state.transfer.amount;
+      const ben = state.transfer.beneficiary;
+      state.balance -= amt;
+
+      document.getElementById('balanceDisplay').textContent = `₹${state.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+      const newTxn = {
+        id: `TXN${Math.floor(100000 + Math.random() * 900000)}`,
+        date: "Just now",
+        title: `Transfer to ${ben.name}`,
+        titleTa: `${ben.tamilName}-க்கு அனுப்பப்பட்டது`,
+        type: "debit",
+        amount: amt
+      };
+      transactions.unshift(newTxn);
+      renderPassbook();
+
+      document.getElementById('receiptTxnId').textContent = newTxn.id;
+      document.getElementById('receiptAmount').textContent = `₹${amt.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+      document.getElementById('receiptRecipient').textContent = state.language === 'ta' ? ben.tamilName : ben.name;
+      document.getElementById('receiptNewBalance').textContent = `₹${state.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+      const receiptMsg = state.language === 'ta'
+        ? `பரிவர்த்தனை வெற்றி! ${amt} ரூபாய் ${ben.tamilName}-க்கு அனுப்பப்பட்டது. உங்கள் புதிய இருப்பு ${Math.floor(state.balance).toLocaleString('en-IN')} ரூபாய்.`
+        : `Payment successful! ${amt} rupees transferred to ${ben.name}. Your new balance is ${Math.floor(state.balance).toLocaleString('en-IN')} rupees.`;
+
+      document.getElementById('receiptSpokenText').textContent = receiptMsg;
+      goToStep(5);
+      speak(receiptMsg);
+    }
+
+    function openPassbookModal() {
+      renderPassbook();
+      document.getElementById('passbookModal').classList.add('open');
+      const intro = state.language === 'ta'
+        ? 'பாஸ்புக் திரை திறக்கப்பட்டது. சமீபத்திய பரிவர்த்தனைகள் திரையில் உள்ளன.'
+        : 'Passbook opened. You have 4 recent transactions. Tap Read All to hear them.';
+      speak(intro);
+    }
+
+    function closePassbookModal() {
+      document.getElementById('passbookModal').classList.remove('open');
+    }
+
+    function renderPassbook() {
+      const listEl = document.getElementById('passbookList');
+      listEl.innerHTML = '';
+
+      transactions.forEach((tx, idx) => {
+        const item = document.createElement('div');
+        item.className = `tx-item ${tx.type}`;
+        item.tabIndex = 0;
+        item.setAttribute('role', 'listitem');
+        const title = state.language === 'ta' ? tx.titleTa : tx.title;
+        const sign = tx.type === 'credit' ? '+' : '-';
+
+        item.innerHTML = `
+          <div>
+            <div class="tx-title">${title}</div>
+            <div class="tx-date">${tx.date} • ${tx.id}</div>
+          </div>
+          <div class="tx-amount">${sign}₹${tx.amount.toLocaleString('en-IN')}</div>
+        `;
+
+        item.onfocus = () => {
+          const narrate = `${title}. ${tx.type === 'credit' ? 'Credited' : 'Debited'} ${tx.amount} rupees on ${tx.date}`;
+          speak(narrate);
+        };
+
+        listEl.appendChild(item);
+      });
+    }
+
+    function readAllTransactionsAloud() {
+      let combined = state.language === 'ta' ? 'சமீபத்திய பரிவர்த்தனைகள்: ' : 'Your recent transactions: ';
+      transactions.forEach((tx, i) => {
+        const title = state.language === 'ta' ? tx.titleTa : tx.title;
+        const typeStr = tx.type === 'credit' ? (state.language === 'ta' ? 'வரவு' : 'credit') : (state.language === 'ta' ? 'பற்று' : 'debit');
+        combined += `Number ${i+1}: ${title}, ${tx.amount} rupees ${typeStr}. `;
+      });
+      speak(combined);
+    }
+
+    function triggerEmergencySOS() {
+      document.getElementById('sosModal').classList.add('open');
+      playFraudAlarm();
+      const prompt = state.language === 'ta'
+        ? 'அவசர உதவி திரை திறக்கப்பட்டது. மோசடி அழைப்புகளை தடுக்க கணக்கை உடனடியாக முடக்கலாம்.'
+        : 'Emergency Anti-Scam Shield opened. You can freeze your account immediately to block cyber fraudsters.';
+      speak(prompt);
+    }
+
+    function closeSosModal() {
+      document.getElementById('sosModal').classList.remove('open');
+    }
+
+    function toggleAccountFreeze() {
+      state.isFrozen = !state.isFrozen;
+      const btn = document.getElementById('freezeToggleBtn');
+      const notice = document.getElementById('frozenStatusNotice');
+
+      if (state.isFrozen) {
+        btn.innerHTML = state.language === 'ta' ? '<span>🔓 கணக்கை மீண்டும் இயக்கவும்</span>' : '<span>🔓 UNFREEZE MY ACCOUNT</span>';
+        btn.style.background = '#10B981';
+        notice.textContent = 'Account Status: 🔒 TEMPORARILY FROZEN VIA SOS';
+        notice.style.color = '#EF4444';
+
+        playFraudAlarm();
+        const frozenSpeech = state.language === 'ta'
+          ? 'அவசர முடக்கம் செயல்படுத்தப்பட்டது! உங்கள் வங்கி கணக்கு முடக்கப்பட்டுள்ளது. மகள் பிரியாவுக்கு அவசர செய்தி அனுப்பப்பட்டுள்ளது.'
+          : 'Emergency SOS activated! Your account is now frozen. An urgent alert with fraud hotline 1930 has been sent to your daughter Priya.';
+        speak(frozenSpeech);
+      } else {
+        btn.innerHTML = state.language === 'ta' ? '<span>🔒 கணக்கை முடக்கு</span>' : '<span>🔒 FREEZE MY ACCOUNT NOW</span>';
+        btn.style.background = 'var(--danger-color)';
+        notice.textContent = 'Account Status: Active & Secured with AI Fraud Shield';
+        notice.style.color = 'var(--text-secondary)';
+
+        playSuccessChime();
+        const unfreezeSpeech = state.language === 'ta'
+          ? 'கணக்கு மீண்டும் இயல்பு நிலைக்கு மீட்டமைக்கப்பட்டது.'
+          : 'Your account has been un-frozen and restored to normal operation.';
+        speak(unfreezeSpeech);
+      }
+    }
+
+    function openPitchModal() {
+      document.getElementById('pitchModal').classList.add('open');
+      speak("DEXATHON 2026 pitch summary opened.");
+    }
+    function closePitchModal() {
+      document.getElementById('pitchModal').classList.remove('open');
+    }
+
+    /* =====================================================================
+       6. ACCESSIBILITY CONTROLS (Contrast, Font Scaling, Language)
+       ===================================================================== */
+    function cycleTheme() {
+      const body = document.body;
+      const label = document.getElementById('themeLabel');
+
+      if (state.theme === 'navy-gold') {
+        state.theme = 'gold-black';
+        body.className = 'theme-gold-black';
+        label.textContent = 'Contrast: Gold/Black';
+        speak('Switched to High Contrast Gold and Black theme.');
+      } else if (state.theme === 'gold-black') {
+        state.theme = 'blue-white';
+        body.className = 'theme-blue-white';
+        label.textContent = 'Contrast: Blue/White';
+        speak('Switched to High Contrast Blue and White theme.');
+      } else if (state.theme === 'blue-white') {
+        state.theme = 'light-senior';
+        body.className = 'theme-light-senior';
+        label.textContent = 'Contrast: Senior Light';
+        speak('Switched to Senior Soft Light theme.');
+      } else {
+        state.theme = 'navy-gold';
+        body.className = 'theme-navy-gold';
+        label.textContent = 'Contrast: Navy/Gold';
+        speak('Switched to Modern Navy Gold theme.');
+      }
+    }
+
+    function cycleFontSize() {
+      state.fontSizeIndex = (state.fontSizeIndex + 1) % state.fontScales.length;
+      const scale = state.fontScales[state.fontSizeIndex];
+      const name = state.fontLabels[state.fontSizeIndex];
+
+      document.documentElement.style.setProperty('--font-scale', scale);
+      document.getElementById('fontLabel').textContent = `Text: ${name}`;
+      speak(`Font size adjusted to ${name}.`);
+    }
+
+    function toggleLanguage() {
+      state.language = (state.language === 'en') ? 'ta' : 'en';
+      applyLanguageStrings();
+    }
+
+    function applyLanguageStrings() {
+      const isTa = (state.language === 'ta');
+      document.getElementById('appTitle').textContent = isTa ? 'பார்வை வங்கி • Drishti Bank' : 'Drishti Bank • பார்வை வங்கி';
+      document.getElementById('appSubtitle').textContent = isTa 
+        ? 'பார்வையற்றோர் மற்றும் முதியோருக்கான குரல் வழி வங்கி சேவை'
+        : 'Accessible Voice-First Banking for the Visually Impaired and Elderly';
+
+      document.getElementById('repeatBtnText').textContent = isTa ? 'மீண்டும் பேசு' : 'Repeat Audio';
+      document.getElementById('stopBtnText').textContent = isTa ? 'நிறுத்து' : 'Stop Voice';
+      document.getElementById('giantMicText').textContent = isTa ? 'வங்கி கட்டளை பேச தட்டவும்' : 'TAP TO SPEAK BANKING COMMAND';
+      document.getElementById('balanceLabelText').textContent = isTa ? 'கணக்கு இருப்பு' : 'AVAILABLE BALANCE';
+      document.getElementById('readBalBtnText').textContent = isTa ? 'இருப்பை பேசு' : 'Read Balance Aloud';
+      document.getElementById('maskBtnText').textContent = isTa ? 'மறைக்க / காட்ட' : 'Mask / Unmask';
+
+      document.getElementById('tileBalTitle').textContent = isTa ? 'இருப்பு சரிபார்' : 'Check Balance';
+      document.getElementById('tileBalDesc').textContent = isTa ? 'உங்கள் வங்கி இருப்பு மற்றும் சமீபத்திய வரவுகளை குரலில் கேளுங்கள்.' : 'Hear your current bank balance and recent credits in clear audio.';
+
+      document.getElementById('tileSendTitle').textContent = isTa ? 'பணம் அனுப்பு' : 'Send Money';
+      document.getElementById('tileSendDesc').textContent = isTa ? 'சைபர் மோசடி தடுப்புடன் குரல் வழி பணப் பரிமாற்றம்.' : 'Step-by-step voice guided transfer with AI cyber scam detection.';
+
+      document.getElementById('tilePassbookTitle').textContent = isTa ? 'குரல் பாஸ்புக்' : 'Voice Passbook';
+      document.getElementById('tilePassbookDesc').textContent = isTa ? 'சமீபத்திய ஓய்வூதிய வரவு மற்றும் மின்கட்டண விவரங்களை கேளுங்கள்.' : 'Listen to recent pension credits and utility bill transactions.';
+
+      document.getElementById('tileSosTitle').textContent = isTa ? 'பாதுகாப்பு & அவசர உதவி' : 'Anti-Scam & SOS';
+      document.getElementById('tileSosDesc').textContent = isTa ? 'மோசடி அழைப்புகளை தடுக்க 1-தட்டு முடக்கம். மகள் பிரியாவுக்கு அழைப்பு.' : '1-Tap emergency freeze to prevent phone scam fraud. Alerts daughter Priya.';
+
+      const langNotice = isTa ? 'மொழி தமிழுக்கு மாற்றப்பட்டது.' : 'Language changed to English.';
+      speak(langNotice);
+    }
+
+    /* =====================================================================
+       7. KEYBOARD SHORTCUTS FOR ACCESSIBILITY (Spacebar = Mic)
+       ===================================================================== */
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        toggleVoiceListening();
+      }
+      if (e.code === 'Escape') {
+        closeTransferModal();
+        closePassbookModal();
+        closeSosModal();
+        closePitchModal();
+      }
+    });
+
+    window.addEventListener('click', function initAudioOnUserGesture() {
+      getAudioContext();
+      window.removeEventListener('click', initAudioOnUserGesture);
+    }, { once: true });
+
+    setTimeout(() => {
+      speak("Welcome to Drishti Accessible Banking. Sathyabama DEXATHON 2026. Press Space or tap the gold button to speak a command.");
+    }, 800);
+  </script>
+</body>
+</html>
