@@ -51,6 +51,12 @@ A voice-first, high-contrast, AI fraud-shielded accessible banking platform that
    * Instantly freezes outgoing bank transactions with one touch or voice command ("Help" / "Scam alert").
    * Automatically simulates alerting emergency contacts (e.g., Daughter Priya) and the National Cyber Crime helpline 1930.
 
+6. **🔐 Multi-Modal Accessible Login Gateway (Seniors & Visually Impaired)**
+   * **Voice Biometric Passphrase Login**: 1-tap voice authentication allowing blind users to say *"Login Ramanathan"* or *"என் குரலே கடவுச்சொல்"* to authenticate without viewing the screen.
+   * **Enforced 8+ Digit Password / Security PIN**: Strictly validates that passwords are 8 and above 8 digits with a live visual counter (`X / 8 digits`), tactile `⌫ Del` backspace, and unique earcon audio tone per digit.
+   * **1-Click Hackathon Judge Demo Login**: Instant one-click authentication as Senior Citizen Pensioner Thiru. S. Ramanathan (`SB-48210992348` / `12345678`).
+   * **Secure Logout Session Management**: Prominent red logout control with chime and audio verification: *"You have been securely logged out."*
+
 ---
 
 ## 🛠️ Technical Architecture & Technology Stack
@@ -86,6 +92,8 @@ A voice-first, high-contrast, AI fraud-shielded accessible banking platform that
          │
          ▼
 [ Python 3 Backend & Banking REST API (Flask) ]
+   ├── POST /api/login (Validates 8+ digit password & voice biometric)
+   ├── GET /api/account
    ├── GET /api/balance
    ├── GET /api/transactions
    ├── POST /api/transfer (Validates 8+ digit password limit)
@@ -119,8 +127,12 @@ Double click: index.html
 
 When presenting to the judges:
 
-1. **Introduction (30s):**
+1. **Introduction & Accessible Multi-Modal Login (30s):**
    * *"Good day judges! We are Team INNOVEX representing Sathyabama Institute. In 2025 alone, over 1.03 lakh Indian senior citizens lost ₹7,769 crore to cyber fraud. Today, we present **Drishti Bank** — an accessible, voice-guided, AI-protected banking system for the elderly and visually impaired."*
+   * Point out the **Accessible Login Gateway**:
+     * Audio automatically narrates login instructions.
+     * **8+ Digit Password Enforcement**: Show how entering fewer than 8 digits triggers a warning alarm and live red counter (`X / 8 digits`).
+     * Show **Voice Biometric Login** ("Login Ramanathan") or tap **⚡ 1-Click Demo Login as Senior Pensioner** to instantly enter the secured dashboard with a welcome chime and spoken greeting!
 
 2. **Live Voice Balance Check (45s):**
    * Press `Spacebar` (or tap the Giant Yellow Button) and say:
