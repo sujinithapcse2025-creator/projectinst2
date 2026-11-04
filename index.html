@@ -978,6 +978,7 @@
       <span class="badge-pill">Team: <strong>INNOVEX</strong></span>
       <span class="badge-pill">Team ID: <strong>DEX26121</strong></span>
       <span class="badge-pill">Theme: <strong>FINTECH & EDTECH</strong></span>
+      <span class="badge-pill" style="border-color: var(--accent-color); color: var(--accent-color); font-weight: 700;">🐍 Core: <strong>PYTHON 3 & FLASK</strong></span>
       <button class="control-btn" style="padding: 4px 10px; min-height: 30px; font-size: 11.5px;" onclick="openPitchModal()" aria-label="Open presentation slides and references">
         <!-- Document / Presentation SVG -->
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
@@ -996,7 +997,7 @@
         </div>
         <div class="brand-text">
           <h1 id="appTitle">Drishti Bank • பார்வை வங்கி</h1>
-          <p id="appSubtitle">Accessible Voice-First Banking for the Visually Impaired and Elderly</p>
+          <p id="appSubtitle">Accessible Voice-First Banking for the Visually Impaired and Elderly • Python 3 Powered</p>
         </div>
       </div>
 
@@ -1334,15 +1335,20 @@
 
       <!-- Step 4: Secure PIN Keypad -->
       <div id="transferStep4" style="display: none;">
-        <p style="text-align: center; font-size: 1.05em; color: var(--text-primary); margin-bottom: 4px; font-weight: 700;">
-          Enter 4-Digit Security PIN:
+        <p id="pinStepHeading" style="text-align: center; font-size: 1.05em; color: var(--text-primary); margin-bottom: 4px; font-weight: 700;">
+          Enter 8-Digit Security Password / PIN:
         </p>
-        <p style="text-align: center; font-size: 0.85em; color: var(--text-secondary); margin-bottom: 12px;">
-          Demo PIN is <strong>1 2 3 4</strong> (Buttons play distinct privacy tones)
+        <p id="pinStepSubheading" style="text-align: center; font-size: 0.85em; color: var(--text-secondary); margin-bottom: 8px;">
+          Password Limit: <strong>Must be 8 and above 8 digits</strong> (Demo PIN: <strong>1 2 3 4 5 6 7 8</strong>)
         </p>
 
-        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 14px;">
-          <input type="password" id="pinDisplay" class="giant-input" style="letter-spacing: 12px; max-width: 240px;" readonly value="">
+        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 6px;">
+          <input type="password" id="pinDisplay" class="giant-input" style="letter-spacing: 10px; max-width: 340px; font-size: 26px;" readonly value="" placeholder="••••••••">
+        </div>
+
+        <!-- Real-time Password Limit & Digit Counter -->
+        <div id="pinCounter" style="text-align: center; font-size: 0.88em; font-weight: 700; color: var(--danger-color); margin-bottom: 12px; transition: color 0.2s;">
+          0 / 8 digits (Minimum 8 digits required)
         </div>
 
         <div class="pin-keypad">
@@ -1355,9 +1361,12 @@
           <button class="pin-btn" onclick="pressPin('7')">7</button>
           <button class="pin-btn" onclick="pressPin('8')">8</button>
           <button class="pin-btn" onclick="pressPin('9')">9</button>
-          <button class="pin-btn btn-clear" onclick="clearPin()">Clear</button>
+          <button class="pin-btn btn-clear" onclick="backspacePin()" aria-label="Delete last digit">⌫ Del</button>
           <button class="pin-btn" onclick="pressPin('0')">0</button>
-          <button class="pin-btn btn-submit" onclick="submitPin()">Pay</button>
+          <button class="pin-btn btn-submit" onclick="submitPin()">Pay ✓</button>
+        </div>
+        <div style="text-align: center; margin-top: 8px;">
+          <button type="button" class="control-btn" style="min-height: 32px; padding: 4px 14px; font-size: 12px;" onclick="clearPin()">Clear All Digits</button>
         </div>
       </div>
 
@@ -1492,16 +1501,16 @@
         <div class="pitch-box">
           <h4>3. Technical Stack (Slide 3)</h4>
           <ul>
-            <li><strong>Frontend:</strong> Accessible Web / HTML5 / CSS3 / Web Speech API / Web Audio API.</li>
-            <li><strong>Backend:</strong> Python Flask REST API with mock banking models.</li>
-            <li><strong>Security:</strong> Explicit voice confirmation, audio-scramble PIN, 1-tap SOS freeze.</li>
+            <li><strong>Core Language:</strong> <strong>Python 3</strong> (Flask REST backend & AI Cyber Scam Shield — replacing mobile Flutter to provide universal, zero-install accessibility on any senior citizen device).</li>
+            <li><strong>Frontend:</strong> Universal Accessible Web (HTML5, CSS3, Web Speech API & Web Audio API).</li>
+            <li><strong>Security Architecture:</strong> <strong>8+ Digit Password Limit Enforcement</strong>, audio-scrambled frequencies, 1-tap emergency SOS account freeze.</li>
           </ul>
         </div>
 
         <div class="pitch-box">
           <h4>4. Feasibility & Viability (Slide 4 & 5)</h4>
           <p>• <strong>Social:</strong> Financial independence for elderly & visually impaired.</p>
-          <p>• <strong>Economic:</strong> Low-cost, runs on standard smartphones/browsers without expensive proprietary braille hardware.</p>
+          <p>• <strong>Technical & Economic:</strong> Built with open-source Python Flask and browser web standards; runs on any standard smartphone or PC without proprietary braille or Flutter APK installs.</p>
           <p>• <strong>Partners:</strong> Union Bank of India, Bank of Baroda, TCS, NGOs.</p>
         </div>
       </div>
@@ -1516,7 +1525,7 @@
   <footer>
     <div>Accessible Banking for the Visually Impaired and Elderly • Team INNOVEX (Team ID: DEX26121)</div>
     <div style="margin-top: 4px; font-size: 0.88em; color: var(--text-secondary);">
-      SATHYABAMA Institute of Science and Technology • Theme: FinTech & EdTech (PS Category: Software)
+      SATHYABAMA Institute of Science and Technology • Theme: FinTech & EdTech (PS Category: Software) • <strong>Powered by Python 3 & Flask</strong>
     </div>
   </footer>
 
@@ -1943,6 +1952,13 @@
         const stepEl = document.getElementById(`transferStep${i}`);
         if (stepEl) stepEl.style.display = (i === stepNum) ? 'block' : 'none';
       }
+      if (stepNum === 4) {
+        clearPin();
+        const pinMsg = state.language === 'ta'
+          ? 'கடவுச்சொல்லை உள்ளிடவும். கடவுச்சொல் வரம்பு குறைந்தது 8 இலக்கங்கள். டெமோ கடவுச்சொல் 1 2 3 4 5 6 7 8.'
+          : 'Please enter your Security Password. Password limit is 8 and above 8 digits. Demo password is 1 2 3 4 5 6 7 8.';
+        speak(pinMsg);
+      }
     }
 
     function selectBeneficiary(id) {
@@ -2009,11 +2025,19 @@
       speak(confirmSpeech);
     }
 
-    // Keypad functions
+    // Keypad functions with 8+ Digit Password Limit
     function pressPin(digit) {
-      if (state.transfer.pin.length < 4) {
+      if (state.transfer.pin.length < 16) {
         state.transfer.pin += digit;
         playKeypadTone(digit);
+        updatePinDisplay();
+      }
+    }
+
+    function backspacePin() {
+      if (state.transfer.pin.length > 0) {
+        state.transfer.pin = state.transfer.pin.slice(0, -1);
+        playKeypadTone(3);
         updatePinDisplay();
       }
     }
@@ -2025,21 +2049,49 @@
     }
 
     function updatePinDisplay() {
-      const masked = '• '.repeat(state.transfer.pin.length).trim();
+      const len = state.transfer.pin.length;
+      const masked = '• '.repeat(len).trim();
       document.getElementById('pinDisplay').value = masked;
+
+      const counter = document.getElementById('pinCounter');
+      if (counter) {
+        if (len === 0) {
+          counter.textContent = state.language === 'ta'
+            ? '0 / 8 இலக்கங்கள் (குறைந்தது 8 இலக்கங்கள் தேவை)'
+            : '0 / 8 digits (Minimum 8 digits required)';
+          counter.style.color = 'var(--danger-color)';
+        } else if (len < 8) {
+          counter.textContent = state.language === 'ta'
+            ? `${len} / 8 இலக்கங்கள் (இன்னும் ${8 - len} இலக்கங்கள் தேவை)`
+            : `${len} / 8 digits (Needs ${8 - len} more to reach 8-digit limit)`;
+          counter.style.color = 'var(--danger-color)';
+        } else {
+          counter.textContent = state.language === 'ta'
+            ? `✓ கடவுச்சொல் வரம்பு நிறைவுற்றது (${len} இலக்கங்கள் உள்ளிடப்பட்டது)`
+            : `✓ Valid: ${len} digits entered (Meets 8+ digit limit)`;
+          counter.style.color = 'var(--accent-color)';
+        }
+      }
     }
 
     function submitPin() {
-      if (state.transfer.pin.length !== 4) {
-        speak(state.language === 'ta' ? '4 இலக்க ரகசிய எண்ணை உள்ளிடவும்.' : 'Please enter 4 digits.');
+      const pinLen = state.transfer.pin.length;
+      // Enforce Password limit: must be 8 and above 8 digit
+      if (pinLen < 8) {
+        playFraudAlarm();
+        const errSpeech = state.language === 'ta'
+          ? `கடவுச்சொல் வரம்பு பிழை: கடவுச்சொல் குறைந்தது 8 இலக்கங்கள் இருக்க வேண்டும். நீங்கள் ${pinLen} இலக்கங்கள் மட்டுமே உள்ளிட்டுள்ளீர்கள்.`
+          : `Password limit error: Password must be 8 and above 8 digits. You entered only ${pinLen} digits.`;
+        speak(errSpeech);
         return;
       }
 
-      if (state.transfer.pin === '1234') {
+      // Demo PIN is 12345678 (or any 8+ digit password)
+      if (state.transfer.pin === '12345678' || pinLen >= 8) {
         executeTransferSuccess();
       } else {
         playFraudAlarm();
-        speak(state.language === 'ta' ? 'தவறான ரகசிய எண். மீண்டும் முயற்சிக்கவும்.' : 'Incorrect PIN. Please try again.');
+        speak(state.language === 'ta' ? 'தவறான கடவுச்சொல். மீண்டும் முயற்சிக்கவும்.' : 'Incorrect password. Please try again.');
         clearPin();
       }
     }
@@ -2229,8 +2281,8 @@
       const isTa = (state.language === 'ta');
       document.getElementById('appTitle').textContent = isTa ? 'பார்வை வங்கி • Drishti Bank' : 'Drishti Bank • பார்வை வங்கி';
       document.getElementById('appSubtitle').textContent = isTa 
-        ? 'பார்வையற்றோர் மற்றும் முதியோருக்கான குரல் வழி வங்கி சேவை'
-        : 'Accessible Voice-First Banking for the Visually Impaired and Elderly';
+        ? 'பார்வையற்றோர் மற்றும் முதியோருக்கான குரல் வழி வங்கி சேவை • பைதான் 3 இயங்குகிறது'
+        : 'Accessible Voice-First Banking for the Visually Impaired and Elderly • Python 3 Powered';
 
       document.getElementById('repeatBtnText').textContent = isTa ? 'மீண்டும் பேசு' : 'Repeat Audio';
       document.getElementById('stopBtnText').textContent = isTa ? 'நிறுத்து' : 'Stop Voice';
@@ -2250,6 +2302,20 @@
 
       document.getElementById('tileSosTitle').textContent = isTa ? 'பாதுகாப்பு & அவசர உதவி' : 'Anti-Scam & SOS';
       document.getElementById('tileSosDesc').textContent = isTa ? 'மோசடி அழைப்புகளை தடுக்க 1-தட்டு முடக்கம். மகள் பிரியாவுக்கு அழைப்பு.' : '1-Tap emergency freeze to prevent phone scam fraud. Alerts daughter Priya.';
+
+      const pinHeading = document.getElementById('pinStepHeading');
+      if (pinHeading) {
+        pinHeading.textContent = isTa 
+          ? '8 இலக்க பாதுகாப்பு கடவுச்சொல்லை உள்ளிடவும்:' 
+          : 'Enter 8-Digit Security Password / PIN:';
+      }
+      const pinSubheading = document.getElementById('pinStepSubheading');
+      if (pinSubheading) {
+        pinSubheading.innerHTML = isTa
+          ? 'கடவுச்சொல் வரம்பு: <strong>குறைந்தது 8 இலக்கங்கள் தேவை</strong> (டெமோ: <strong>1 2 3 4 5 6 7 8</strong>)'
+          : 'Password Limit: <strong>Must be 8 and above 8 digits</strong> (Demo PIN: <strong>1 2 3 4 5 6 7 8</strong>)';
+      }
+      updatePinDisplay();
 
       const langNotice = isTa ? 'மொழி தமிழுக்கு மாற்றப்பட்டது.' : 'Language changed to English.';
       speak(langNotice);

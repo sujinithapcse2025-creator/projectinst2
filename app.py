@@ -2,7 +2,8 @@
 INNOVEX - DEXATHON 2026 (Team ID: DEX26121)
 Sathyabama Institute of Science and Technology
 Accessible Banking for the Visually Impaired and Elderly
-Backend REST API & AI Fraud Detection Service
+Primary Programming Language: Python 3 (Flask Backend & AI Fraud Shield)
+Platform Architecture: Pure Python & Universal Web Accessibility Layer (No Flutter)
 """
 
 from flask import Flask, jsonify, request, send_from_directory
@@ -11,6 +12,16 @@ import re
 import datetime
 
 app = Flask(__name__, static_folder=".")
+
+# Language & Platform Metadata
+TECH_STACK = {
+    "primary_language": "Python 3",
+    "backend_framework": "Flask 3.x (Python)",
+    "ai_engine": "Python Heuristic Cyber Scam Shield",
+    "architecture_note": "Replaced mobile Flutter with lightweight Python & native browser Web APIs for universal accessibility without app-store barriers",
+    "password_rule": "Password limit: Must be 8 and above 8 digits",
+    "password_min_digits": 8
+}
 
 # Mock Banking Data (Elderly Pensioner Account)
 BANK_ACCOUNT = {
@@ -24,6 +35,7 @@ BANK_ACCOUNT = {
     "currency_symbol": "₹",
     "is_frozen": False,
     "guardian_contact": "+91 98401 23456 (Daughter - Priya)",
+    "password_min_length": 8,
     "last_updated": datetime.datetime.now().strftime("%d %b %Y, %I:%M %p")
 }
 
@@ -131,6 +143,7 @@ def get_account():
     """Returns current account details and status"""
     return jsonify({
         "status": "success",
+        "tech_stack": TECH_STACK,
         "account": BANK_ACCOUNT,
         "beneficiaries": BENEFICIARIES
     })
@@ -219,7 +232,7 @@ def check_fraud():
 
 @app.route("/api/transfer", methods=["POST"])
 def process_transfer():
-    """Processes simulated secure transaction with explicit verification"""
+    """Processes simulated secure transaction with explicit verification and 8+ digit password check"""
     if BANK_ACCOUNT["is_frozen"]:
         return jsonify({
             "status": "error",
@@ -229,14 +242,24 @@ def process_transfer():
     data = request.json or {}
     recipient_name = data.get("recipient_name", "Beneficiary")
     amount = float(data.get("amount", 0))
-    pin = data.get("pin", "")
+    pin = str(data.get("pin", "")).strip()
 
-    if pin != "1234":
+    # Password limit rule: Must be 8 and above 8 digits
+    if len(pin) < 8:
         return jsonify({
             "status": "error",
-            "message": "Invalid Security PIN. Transaction declined.",
-            "spoken_en": "Incorrect PIN. For your protection, the transaction was canceled.",
-            "spoken_ta": "தவறான ரகசிய எண். பாதுகாப்புக்காக பரிவர்த்தனை ரத்து செய்யப்பட்டது."
+            "message": f"Password limit violation: Security Password/PIN must be 8 and above 8 digits. Received {len(pin)} digits.",
+            "spoken_en": "Password limit error. Security password must be at least 8 digits long.",
+            "spoken_ta": "கடவுச்சொல் வரம்பு பிழை: கடவுச்சொல் குறைந்தது 8 இலக்கங்கள் இருக்க வேண்டும்."
+        }), 400
+
+    # Demo 8-digit Password / PIN check (demo password is 12345678, or any 8+ digit input)
+    if pin != "12345678" and not (pin.isdigit() and len(pin) >= 8):
+        return jsonify({
+            "status": "error",
+            "message": "Invalid Security Password/PIN. Transaction declined.",
+            "spoken_en": "Incorrect password. For your protection, the transaction was canceled.",
+            "spoken_ta": "தவறான கடவுச்சொல். பாதுகாப்புக்காக பரிவர்த்தனை ரத்து செய்யப்பட்டது."
         }), 401
 
     if amount <= 0:

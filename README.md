@@ -41,9 +41,11 @@ A voice-first, high-contrast, AI fraud-shielded accessible banking platform that
    * **Screen-Reader Audio Assistant**: Automatically narrates every focused button and tile out loud on hover, tab navigation, or arrow keys.
    * **Privacy Masking**: Balance masking with audio narration controls to protect from shoulder-surfing.
 
-4. **🔒 Explicit Voice Confirmation & Privacy PIN**
-   * Requires clear verbal and tactile verification: *"You are sending ₹500 to Priya. Say Confirm to proceed, or Cancel to go back."*
-   * Distinct tone numeric keypad where each digit produces a unique audio frequency, allowing blind users to input PINs securely without the number being spoken aloud.
+4. **🔒 8+ Digit Password Limit & Privacy Tone Keypad**
+   * **Mandatory Password Limit**: Enforces a strict minimum of **8 and above 8 digits** for transaction authentication (both frontend keypad and backend validation).
+   * **Live Digit Counter & Backspace**: Displays real-time progress (`X / 8 digits`, red when under limit, green when met) with tactile `⌫ Del` backspace control.
+   * **Audio Privacy Tone Synthesis**: Numeric keypad where each digit produces a unique audio frequency (earcon), allowing visually impaired users to verify keystrokes without the password being announced aloud to eavesdroppers.
+   * **Explicit Verbal Confirmation**: Clear two-factor confirmation: *"You are sending ₹500 to Priya. Say Confirm to proceed, or Cancel to go back."*
 
 5. **🚨 1-Tap Emergency SOS & Account Freeze**
    * Instantly freezes outgoing bank transactions with one touch or voice command ("Help" / "Scam alert").
@@ -51,7 +53,13 @@ A voice-first, high-contrast, AI fraud-shielded accessible banking platform that
 
 ---
 
-## 🛠️ Technical Architecture (Slide 3 Mapping)
+## 🛠️ Technical Architecture & Technology Stack
+
+### 🐍 Primary Implementation: Python 3 Architecture (Replacing Flutter)
+* **Why Python 3 instead of Flutter/Dart?**
+  * **Zero App-Store Download Barrier**: Mobile Flutter apps require elderly and visually impaired users to locate, download, update, and manage permissions in app stores. A Python 3 web architecture allows instant universal access across any phone, tablet, or PC browser with zero installation friction.
+  * **Direct Native Accessibility Integration**: Integrates directly with native OS screen readers (TalkBack, VoiceOver, NVDA, JAWS) and standard Web Speech & Web Audio APIs without mobile Flutter render-tree virtualization quirks.
+  * **Powerful Python AI/NLP Pipeline**: Python serves as the gold standard for financial fraud heuristics, scam keyword NLP matching, and microservice integration with national cyber-safety reporting systems (Helpline 1930).
 
 ```
 [ User (Visually Impaired / Elderly) ]
@@ -72,14 +80,15 @@ A voice-first, high-contrast, AI fraud-shielded accessible banking platform that
 [ Security & Safety Layer ]
    ├── AI Fraud Detection Engine (Heuristics + Keyword NLP)
    ├── Explicit Voice Confirmation ("Confirm" or "Cancel")
-   ├── Privacy Scrambled Keypad
+   ├── 8+ Digit Password Limit Enforcement (Backend & Frontend)
+   ├── Audio Privacy Earcon Numeric Keypad
    └── Instant SOS Account Freeze Protocol
          │
          ▼
-[ Python Flask Backend & Mock Banking API ]
+[ Python 3 Backend & Banking REST API (Flask) ]
    ├── GET /api/balance
    ├── GET /api/transactions
-   ├── POST /api/transfer
+   ├── POST /api/transfer (Validates 8+ digit password limit)
    ├── POST /api/ai-fraud-check
    └── POST /api/sos-freeze
 ```
@@ -126,10 +135,11 @@ When presenting to the judges:
      > *"Warning! High fraud risk detected. This recipient was flagged on National Cyber Crime Helpline 1930 for senior lottery fraud."*
    * Explain how this directly prevents the ₹7,769 crore fraud crisis highlighted in Slide 2.
 
-4. **Demonstrating Safe Transfer & Audio Confirmation (30s):**
+4. **Demonstrating Safe Transfer, 8+ Digit Password & Audio Confirmation (30s):**
    * Select **Priya (Daughter)** -> Choose ₹500.
    * System reads explicit audio confirmation: *"Please confirm: You are sending 500 rupees to Priya."*
-   * Enter PIN `1 2 3 4` -> Success chime plays, transaction receipt is spoken aloud, balance updates dynamically!
+   * Demonstrate password validation: Try entering 4 digits (e.g., `1 2 3 4`) and pressing Pay -> Alarm tone plays and system announces: *"Password limit error: Password must be 8 and above 8 digits."*
+   * Complete the 8 digits with Demo PIN `1 2 3 4 5 6 7 8` -> Digit counter turns green (`✓ Valid: 8 digits entered`), success chime plays, transaction receipt is spoken aloud, and balance updates dynamically!
 
 5. **Emergency SOS (15s):**
    * Say `"Help scam emergency"` or tap **Anti-Scam & SOS**.
